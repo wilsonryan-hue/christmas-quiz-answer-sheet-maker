@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Christmas quiz answer sheet maker: print team sheets and a scoring grid</title>
+<meta name="description" content="Free, open-source Christmas quiz answer sheet maker in one HTML file. Choose rounds and questions, add a joker box and tie-breaker, print team answer sheets, a quizmaster key and a scoring grid. No sign-up, nothing stored.">
+<style>
+:root{--navy:#0D1323;--cobalt:#2563EB;--red:#B42318;--green:#166534;--paper:#F7F7F8;--ink:#1F2937;--muted:#6B7280;--line:#E5E7EB}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:1.0625rem;line-height:1.55}
+a{color:var(--cobalt)}
+.wrap{width:min(60rem,calc(100% - 2rem));margin:0 auto;padding:1rem 0 2rem}
+h1{font-size:clamp(1.8rem,4vw,2.4rem);line-height:1.15;margin:.2rem 0 .6rem;color:var(--navy)}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.25rem;margin:1.2rem 0}
+label.f{display:block;font-weight:700;color:var(--navy);margin:.2rem 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:1rem 1.2rem}
+input[type=number],input[type=text],select,textarea{font:inherit;border:1.5px solid var(--line);border-radius:8px;padding:.4rem .5rem;background:#fff;width:100%}
+textarea{min-height:5.5rem}
+.opts label{display:block;margin:.3rem 0}
+button{font:inherit;font-weight:700;border:0;border-radius:10px;padding:.7rem 1.2rem;background:var(--cobalt);color:#fff;cursor:pointer;margin:.5rem .5rem 0 0}
+button.alt{background:var(--navy)}
+.note{color:var(--muted);font-size:.95rem}
+#msg{color:var(--red);font-weight:700;min-height:1.4rem}
+#out{margin:1rem 0}
+.sheet{background:#fff;border:1px solid var(--line);padding:1.2rem 1.4rem;margin:1rem 0;border-radius:6px;--accent:var(--red)}
+.sheet.green{--accent:var(--green)}.sheet.navy{--accent:var(--navy)}.sheet.plain{--accent:#000}
+.sheet h2{margin:0;color:var(--accent);font-size:1.5rem;line-height:1.2}
+.sheet .sub{margin:.1rem 0 .8rem;color:var(--muted)}
+.sheet .team{display:flex;gap:.6rem;align-items:flex-end;margin:.6rem 0 .9rem;font-weight:700}
+.sheet .team span.line{flex:1;border-bottom:2px solid #000;height:1.6rem}
+.sheet .team .joker{border:2px solid var(--accent);color:var(--accent);padding:.15rem .6rem;border-radius:6px;font-size:.9rem;white-space:nowrap}
+.sheet .q{display:flex;align-items:flex-end;gap:.5rem;margin:0;height:2.3rem}
+.sheet .q b{width:2rem;text-align:right;color:var(--accent)}
+.sheet .q i{flex:1;border-bottom:1px solid #444;height:1.6rem}
+.sheet .q em{width:2.4rem;height:1.7rem;border:1.5px solid var(--accent);border-radius:4px;display:inline-block;margin-bottom:.15rem}
+.sheet .tot{display:flex;justify-content:flex-end;align-items:center;gap:.6rem;font-weight:700;margin-top:.8rem}
+.sheet .tot em{width:4rem;height:2rem;border:2px solid var(--accent);border-radius:4px;display:inline-block}
+.sheet table{border-collapse:collapse;width:100%;font-size:.95rem}
+.sheet th,.sheet td{border:1.5px solid #444;padding:.15rem .3rem;text-align:center;height:1.9rem}
+.sheet th{background:var(--accent);color:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.sheet td.n{width:35%;}
+.sheet .foot{margin-top:.8rem;font-size:.8rem;color:var(--muted)}
+.tb{margin-top:1rem;border:1.5px dashed var(--accent);border-radius:8px;padding:.6rem .8rem}
+.tb .l{display:flex;gap:.6rem;align-items:flex-end;margin:.5rem 0}
+.tb .l i{flex:1;border-bottom:1px solid #444;height:1.4rem}
+@media print{
+ @page{size:A4;margin:12mm}
+ body{background:#fff}
+ .noprint{display:none!important}
+ .wrap{width:100%;padding:0}
+ #out{margin:0}
+ .sheet{border:0;border-radius:0;margin:0;padding:0;page-break-after:always;break-after:page}
+ .sheet:last-child{page-break-after:auto;break-after:auto}
+ .sheet .q{height:var(--qh,3.1rem)}
+ .sheet th,.sheet td{height:3rem}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="noprint">
+<h1>Free Christmas quiz answer sheet maker</h1>
+<p>Choose how many rounds and questions you have, then print a team answer sheet for every round, a quizmaster key and a scoring grid. It runs in your browser and stores nothing.</p>
+<div class="card">
+<div class="grid">
+<div><label class="f" for="title">Quiz title</label><input type="text" id="title" value="Christmas Quiz" maxlength="60"></div>
+<div><label class="f" for="when">Date or venue (optional)</label><input type="text" id="when" placeholder="Fri 19 December, The Red Lion" maxlength="60"></div>
+<div><label class="f" for="rounds">Rounds (1 to 12)</label><input type="number" id="rounds" min="1" max="12" value="6"></div>
+<div><label class="f" for="qs">Questions per round (5 to 20)</label><input type="number" id="qs" min="5" max="20" value="10"></div>
+<div><label class="f" for="teams">Teams on the scoring grid (2 to 24)</label><input type="number" id="teams" min="2" max="24" value="10"></div>
+<div><label class="f" for="style">Style</label><select id="style"><option value="">Red</option><option value="green">Green</option><option value="navy">Midnight blue</option><option value="plain">Plain black (saves ink)</option></select></div>
+</div>
+<div style="margin-top:1rem"><label class="f" for="names">Round names, one per line (optional, in order)</label><textarea id="names" placeholder="Christmas films&#10;Festive food&#10;Music&#10;Picture round"></textarea></div>
+<div class="opts" style="margin-top:.6rem">
+<label><input type="checkbox" id="marks" checked> Add a small score box beside each answer line</label>
+<label><input type="checkbox" id="joker" checked> Add a joker box (double points on one round)</label>
+<label><input type="checkbox" id="tb" checked> Add a tie-breaker sheet (closest number wins)</label>
+<label><input type="checkbox" id="key" checked> Add a quizmaster answer key with blank lines</label>
+<label><input type="checkbox" id="grid" checked> Add a scoring grid for all teams</label>
+</div>
+<button id="go" type="button">Make my sheets</button>
+<button id="pr" type="button" class="alt">Print</button>
+<div id="msg" role="status"></div>
+<p class="note">Print at 100 percent on A4. One round prints per page. To save paper, print only the pages you need.</p>
+</div>
+</div>
+<div id="out"></div>
+</div>
+<script>
+(function(){
+function $(i){return document.getElementById(i)}
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!==undefined)e.textContent=x;return e}
+function clamp(v,a,b,d){v=parseInt(v,10);if(isNaN(v))return d;return Math.max(a,Math.min(b,v))}
+function head(sheet,title,sub){sheet.appendChild(el('h2','',title));sheet.appendChild(el('p','sub',sub))}
+function build(){
+ var R=clamp($('rounds').value,1,12,6),Q=clamp($('qs').value,5,20,10),T=clamp($('teams').value,2,24,10);
+ $('rounds').value=R;$('qs').value=Q;$('teams').value=T;
+ var title=$('title').value.trim()||'Christmas Quiz',when=$('when').value.trim();
+ var names=$('names').value.split(/\r?\n/).map(function(s){return s.trim()}).filter(Boolean);
+ var cls=$('style').value;var out=$('out');out.textContent='';out.style.setProperty('--qh',Q<=12?'3.1rem':(Q<=16?'2.5rem':'2.1rem'));
+ var sub=when?title+' · '+when:title;
+ function sh(){var s=el('div','sheet '+cls);out.appendChild(s);return s}
+ for(var r=1;r<=R;r++){
+  var s=sh();var rn=names[r-1]||'';
+  head(s,'Round '+r+(rn?': '+rn:''),sub);
+  var t=el('div','team');t.appendChild(el('span','','Team name'));t.appendChild(el('span','line'));
+  if($('joker').checked)t.appendChild(el('span','joker','Joker round? ☐'));
+  s.appendChild(t);
+  for(var q=1;q<=Q;q++){var row=el('p','q');row.appendChild(el('b','',q+'.'));row.appendChild(el('i'));if($('marks').checked)row.appendChild(el('em'));s.appendChild(row)}
+  var tot=el('div','tot');tot.appendChild(el('span','','Round '+r+' total'));tot.appendChild(el('em'));s.appendChild(tot);
+  s.appendChild(el('p','foot','Write one answer per line. Hand your sheet to the quizmaster when time is up.'));
+ }
+ if($('tb').checked){
+  var s2=sh();head(s2,'Tie-breaker',sub);
+  var t2=el('div','team');t2.appendChild(el('span','','Team name'));t2.appendChild(el('span','line'));s2.appendChild(t2);
+  var b=el('div','tb');
+  b.appendChild(el('p','','Quizmaster: write your question here. The closest number wins. If two teams are equally close, the one that answered first wins.'));
+  var l=el('div','l');l.appendChild(el('b','','Question:'));l.appendChild(el('i'));b.appendChild(l);
+  var l2=el('div','l');l2.appendChild(el('b','','Our answer:'));l2.appendChild(el('i'));b.appendChild(l2);
+  var l3=el('div','l');l3.appendChild(el('b','','Correct answer:'));l3.appendChild(el('i'));b.appendChild(l3);
+  s2.appendChild(b);
+ }
+ if($('key').checked){
+  var s3=sh();head(s3,'Quizmaster answer key',sub);
+  var cols=Q>10?2:1;var wrap=el('div','');wrap.style.cssText='display:grid;grid-template-columns:repeat('+Math.min(R,2)+',1fr);gap:0 1.4rem';
+  for(var r2=1;r2<=R;r2++){var box=el('div','');box.appendChild(el('p','', 'Round '+r2+(names[r2-1]?': '+names[r2-1]:'')));box.firstChild.style.cssText='font-weight:700;margin:.6rem 0 0';
+   for(var q2=1;q2<=Q;q2++){var rw=el('p','q');rw.style.height=(Q>10?'1.4rem':'1.6rem');rw.appendChild(el('b','',q2+'.'));rw.appendChild(el('i'));box.appendChild(rw)}wrap.appendChild(box)}
+  s3.appendChild(wrap);
+ }
+ if($('grid').checked){
+  var s4=sh();head(s4,'Scoring grid',sub);
+  var tb=el('table');var th=el('tr');th.appendChild(el('th','','Team'));
+  for(var c=1;c<=R;c++)th.appendChild(el('th','','R'+c));th.appendChild(el('th','','Tie-break'));th.appendChild(el('th','','Total'));tb.appendChild(th);
+  for(var k=1;k<=T;k++){var tr=el('tr');var tdn=el('td','n');tdn.style.textAlign='left';tdn.textContent=k+'.';tr.appendChild(tdn);for(var c2=0;c2<R+2;c2++)tr.appendChild(el('td'));tb.appendChild(tr)}
+  s4.appendChild(tb);
+  s4.appendChild(el('p','foot','Add the round scores for each team. If the joker is used, double that round before you add up.'));
+ }
+ $('msg').textContent='';
+ return true;
+}
+$('go').addEventListener('click',function(){build();$('out').scrollIntoView({behavior:'smooth'})});
+$('pr').addEventListener('click',function(){if(!$('out').children.length)build();window.print()});
+build();
+})();
+</script>
+<div class="wrap noprint" style="padding-top:0"><p class="note">Made by <a href="https://www.tchworks.co.uk/?utm_source=github&amp;utm_medium=repo&amp;utm_campaign=quiz-sheet-repo">TCH Works</a>. MIT licence.</p></div>
+</body>
+</html>

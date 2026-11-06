@@ -31,6 +31,11 @@ Put `index.html` on any static host (GitHub Pages, Netlify, a school intranet). 
 3. Swap sheets between teams to mark, or collect them and mark yourself.
 4. Fill in the scoring grid after each round. Use the tie-breaker if two teams finish level.
 
+
+## Free printable PDF
+
+A ready-made 6-page A4 sample (how-to, Festive Food + Kids' Round quizmaster and team sheets, 6 tie-breakers) is attached to the [v1.0.0-free-printable release](https://github.com/wilsonryan-hue/christmas-quiz-answer-sheet-maker/releases/tag/v1.0.0-free-printable). Download [christmas-quiz-answer-sheets-2026-free.pdf](https://github.com/wilsonryan-hue/christmas-quiz-answer-sheet-maker/releases/download/v1.0.0-free-printable/christmas-quiz-answer-sheets-2026-free.pdf). Free for personal, classroom, PTA and office use.
+
 ## Licence
 
 MIT. Made by [TCH Works](https://www.tchworks.co.uk/?utm_source=github&utm_medium=repo&utm_campaign=quiz-sheet-repo), which also publishes a [Great British Christmas Pub Quiz Host Pack](https://www.tchworks.co.uk/shop/great-british-christmas-quiz/?utm_source=github&utm_medium=repo&utm_campaign=quiz-sheet-repo) with ready-written questions.

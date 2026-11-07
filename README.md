@@ -34,7 +34,9 @@ Put `index.html` on any static host (GitHub Pages, Netlify, a school intranet). 
 
 ## Free printable PDF
 
-A ready-made 6-page A4 sample (how-to, Festive Food + Kids' Round quizmaster and team sheets, 6 tie-breakers) is attached to the [v1.0.0-free-printable release](https://github.com/wilsonryan-hue/christmas-quiz-answer-sheet-maker/releases/tag/v1.0.0-free-printable). Download [christmas-quiz-answer-sheets-2026-free.pdf](https://github.com/wilsonryan-hue/christmas-quiz-answer-sheet-maker/releases/download/v1.0.0-free-printable/christmas-quiz-answer-sheets-2026-free.pdf). Free for personal, classroom, PTA and office use.
+A ready-made 6-page A4 sample (how-to, Festive Food + Kids' Round quizmaster and team sheets, 6 tie-breakers) is attached to the [v1.0.0-free-printable release](https://github.com/wilsonryan-hue/christmas-quiz-answer-sheet-maker/releases/tag/v1.0.0-free-printable)
+
+Also on Gumroad (free instant download): https://tchworks.gumroad.com/l/zjktlg. Download [christmas-quiz-answer-sheets-2026-free.pdf](https://github.com/wilsonryan-hue/christmas-quiz-answer-sheet-maker/releases/download/v1.0.0-free-printable/christmas-quiz-answer-sheets-2026-free.pdf). Free for personal, classroom, PTA and office use.
 
 ## Licence
 
